@@ -27,11 +27,13 @@ class MyApp extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
       return AnimatedSplashScreen(splash: Column(
-          children: [Image.asset('assets/logo_icon.jpg'),
+          children: [Image.asset('assets/logo_icoon.png'),
           const Text('Cartracker', style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),)],
       ),
           backgroundColor: Colors.black12,
           nextScreen: const Homepage(),
-      splashIconSize: ,);
+      splashIconSize: 307,
+      duration: 4000,
+      splashTransition: SplashTransition.fadeTransition,);
     }
   }

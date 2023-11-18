@@ -21,7 +21,7 @@ class _HomepageState extends State<Homepage> {
     super.initState();
 
     //fetch data from API
-    Timer.periodic(const Duration(seconds: 2), (timer){
+    Timer.periodic(const Duration(milliseconds: 600), (timer){
       getData();
     });
 
@@ -60,34 +60,34 @@ on Exception catch(_) {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Row(children: [
-                Expanded(child: Text('Name: ${instructions?.name}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false, ))
+                Expanded(child: Text('Name: ${instructions?.name}', style: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false, ))
               ],),
               Row(children: [
-                Expanded(child: Text('fahrgestellnummer: ${instructions?.fahrgestellnummer}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,))
+                Expanded(child: Text('Fahrgestellnummer: ${instructions?.fahrgestellnummer}', style: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,))
               ],),
               Row(children: [
-                Expanded(child:Text('Geschwindigkeit: ${instructions?.geschwindigkeit}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                Expanded(child:Text('Geschwindigkeit: ${instructions?.geschwindigkeit}', style: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
                 )],),
               Row(children: [
-                Expanded(child:Text('Drehzahl: ${instructions?.drehzahl}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                Expanded(child:Text('Drehzahl: ${instructions?.drehzahl}', style: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
                 )],),
               Row(children: [
-                Expanded(child:Text('Kilometerstand: ${instructions?.kmStand}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                Expanded(child:Text('Kilometerstand: ${instructions?.kmStand}', style: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
                 )],),
               Row(children: [
-                Expanded(child: Text('Motortemp: ${instructions?.motorTemperatur}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                Expanded(child: Text('Motortemp: ${instructions?.motorTemperatur}', style: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
                 )],),
               Row(children: [
-                Expanded(child:Text('Ladedruck: ${instructions?.ladedruck}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                Expanded(child:Text('Ladedruck: ${instructions?.ladedruck}', style: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
                 )],),
               Row(children: [
-                Expanded(child:Text('Öldruck: ${instructions?.oeldruck}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                Expanded(child:Text('Öldruck: ${instructions?.oeldruck}', style: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
                 )],),
               Row(children: [
-                Expanded(child:Text('Spritverbrauch: ${instructions?.spritVerbrauch}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                Expanded(child:Text('Spritverbrauch: ${instructions?.spritVerbrauch}', style: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
                 )],),
               Row(children: [
-                Expanded(child:Text('Tankfüllstand: ${instructions?.tankfuellstand}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                Expanded(child:Text('Tankfüllstand: ${instructions?.tankfuellstand}', style: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
                 )],)
             ],
           ),
