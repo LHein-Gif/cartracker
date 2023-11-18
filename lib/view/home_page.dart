@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:cartracker/models/post.dart';
 import 'package:cartracker/services/remote_services.dart';
 import 'package:flutter/material.dart';
 
-class home_page extends StatefulWidget {
-  const home_page({super.key});
+
+
+class Homepage extends StatefulWidget {
+  const Homepage({super.key});
 
   @override
-  _home_pageState createState() => _home_pageState();
+  _HomepageState createState() => _HomepageState();
 }
 
-class _home_pageState extends State<home_page> {
+class _HomepageState extends State<Homepage> {
   Instruction? instructions;
   var isLoaded = false;
   @override
@@ -17,17 +21,31 @@ class _home_pageState extends State<home_page> {
     super.initState();
 
     //fetch data from API
-    getData();
+    Timer.periodic(const Duration(seconds: 2), (timer){
+      getData();
+    });
+
   }
 
   getData() async{
-   instructions = await RemoteService().getInstruction();
-   if(instructions != null){
-     setState(() {
-       isLoaded = true;
-     });
-   }
+   instructions = null;
+try {
+  instructions = await RemoteService().getInstruction();
+  switch (instructions) {
+    case null : setState(() {
+      isLoaded = false;
+    });
+    case !=null : setState(() {
+      isLoaded = true;
+    });
   }
+}
+on Exception catch(_) {
+  setState(() {
+    isLoaded = false;
+  });
+}
+    }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,47 +53,45 @@ class _home_pageState extends State<home_page> {
         title: const Text('Werte'),
       ),
       body: Visibility(
-        visible: isLoaded,
-        replacement: const Center(child: CircularProgressIndicator(),
-        ),
-        child: SingleChildScrollView(
+        visible: isLoaded
+        ,replacement: const Center(child: CircularProgressIndicator()
+    ),child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Row(children: [
-                Text('Name: ${instructions!.name}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold) )
+                Expanded(child: Text('Name: ${instructions?.name}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false, ))
               ],),
               Row(children: [
-                Text('fahrgestellnummer: ${instructions!.fahrgestellnummer}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 20, fontWeight: FontWeight.bold))
+                Expanded(child: Text('fahrgestellnummer: ${instructions?.fahrgestellnummer}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,))
               ],),
               Row(children: [
-                Text('Geschwindigkeit: ${instructions!.geschwindigkeit}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold))
-              ],),
+                Expanded(child:Text('Geschwindigkeit: ${instructions?.geschwindigkeit}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                )],),
               Row(children: [
-                Text('Drehzahl: ${instructions!.drehzahl}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold))
-              ],)
-              ,
+                Expanded(child:Text('Drehzahl: ${instructions?.drehzahl}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                )],),
               Row(children: [
-                Text('Kilometerstand: ${instructions!.kmStand}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold))
-              ],),
+                Expanded(child:Text('Kilometerstand: ${instructions?.kmStand}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                )],),
               Row(children: [
-                Text('Motortemp: ${instructions!.motorTemperatur}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold))
-              ],),
+                Expanded(child: Text('Motortemp: ${instructions?.motorTemperatur}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                )],),
               Row(children: [
-                Text('Ladedruck: ${instructions!.ladedruck}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold))
-              ],),
+                Expanded(child:Text('Ladedruck: ${instructions?.ladedruck}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                )],),
               Row(children: [
-                Text('Öldruck: ${instructions!.oeldruck}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold))
-              ],),
+                Expanded(child:Text('Öldruck: ${instructions?.oeldruck}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                )],),
               Row(children: [
-                Text('Spritverbrauch: ${instructions!.spritVerbrauch}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold))
-              ],),
+                Expanded(child:Text('Spritverbrauch: ${instructions?.spritVerbrauch}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                )],),
               Row(children: [
-                Text('Tankfüllstand: ${instructions!.tankfuellstand}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold))
-              ],)
+                Expanded(child:Text('Tankfüllstand: ${instructions?.tankfuellstand}', style: const TextStyle(color: Colors.deepPurpleAccent, fontSize: 25, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 2, softWrap: false,)
+                )],)
             ],
           ),
-        )
+      )
       )
     );
   }
