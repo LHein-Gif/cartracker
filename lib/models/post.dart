@@ -1,12 +1,4 @@
-// To parse this JSON data, do
-//
-//     final welcome = welcomeFromJson(jsonString);
-
 import 'dart:convert';
-
-Welcome welcomeFromJson(String str) => Welcome.fromJson(json.decode(str));
-
-String welcomeToJson(Welcome data) => json.encode(data.toJson());
 
 class Welcome {
   String greeting;
@@ -16,6 +8,10 @@ class Welcome {
     required this.greeting,
     required this.instructions,
   });
+
+  factory Welcome.fromRawJson(String str) => Welcome.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 
   factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
     greeting: json["greeting"],
@@ -32,8 +28,8 @@ class Instruction {
   int geschwindigkeit;
   int drehzahl;
   int kmStand;
-  int tankfuellstand;
-  int motorTemperatur;
+  double tankfuellstand;
+  double motorTemperatur;
   double oeldruck;
   double spritVerbrauch;
   double ladedruck;
@@ -53,6 +49,10 @@ class Instruction {
     required this.name,
   });
 
+  factory Instruction.fromRawJson(String str) => Instruction.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
   factory Instruction.fromJson(Map<String, dynamic> json) => Instruction(
     geschwindigkeit: json["geschwindigkeit"],
     drehzahl: json["drehzahl"],
@@ -65,7 +65,6 @@ class Instruction {
     fahrgestellnummer: json["fahrgestellnummer"],
     name: json["name"],
   );
-
 
   Map<String, dynamic> toJson() => {
     "geschwindigkeit": geschwindigkeit,
