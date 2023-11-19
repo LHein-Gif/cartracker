@@ -14,14 +14,15 @@ class Welcome {
   String toRawJson() => json.encode(toJson());
 
   factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
-    greeting: json["greeting"],
-    instructions: List<Instruction>.from(json["instructions"].map((x) => Instruction.fromJson(x))),
-  );
+        greeting: json["greeting"],
+        instructions: List<Instruction>.from(
+            json["instructions"].map((x) => Instruction.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "greeting": greeting,
-    "instructions": List<dynamic>.from(instructions.map((x) => x.toJson())),
-  };
+        "greeting": greeting,
+        "instructions": List<dynamic>.from(instructions.map((x) => x.toJson())),
+      };
 }
 
 class Instruction {
@@ -49,33 +50,34 @@ class Instruction {
     required this.name,
   });
 
-  factory Instruction.fromRawJson(String str) => Instruction.fromJson(json.decode(str));
+  factory Instruction.fromRawJson(String str) =>
+      Instruction.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory Instruction.fromJson(Map<String, dynamic> json) => Instruction(
-    geschwindigkeit: json["geschwindigkeit"],
-    drehzahl: json["drehzahl"],
-    kmStand: json["kmStand"],
-    tankfuellstand: json["tankfuellstand"],
-    motorTemperatur: json["motorTemperatur"],
-    oeldruck: json["oeldruck"]?.toDouble(),
-    spritVerbrauch: json["spritVerbrauch"]?.toDouble(),
-    ladedruck: json["ladedruck"]?.toDouble(),
-    fahrgestellnummer: json["fahrgestellnummer"],
-    name: json["name"],
-  );
+        geschwindigkeit: json["geschwindigkeit"],
+        drehzahl: json["drehzahl"],
+        kmStand: json["kmStand"],
+        tankfuellstand: json["tankfuellstand"],
+        motorTemperatur: json["motorTemperatur"],
+        oeldruck: json["oeldruck"]?.toDouble(),
+        spritVerbrauch: json["spritVerbrauch"]?.toDouble(),
+        ladedruck: json["ladedruck"]?.toDouble(),
+        fahrgestellnummer: json["fahrgestellnummer"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "geschwindigkeit": geschwindigkeit,
-    "drehzahl": drehzahl,
-    "kmStand": kmStand,
-    "tankfuellstand": tankfuellstand,
-    "motorTemperatur": motorTemperatur,
-    "oeldruck": oeldruck,
-    "spritVerbrauch": spritVerbrauch,
-    "ladedruck": ladedruck,
-    "fahrgestellnummer": fahrgestellnummer,
-    "name": name,
-  };
+        "geschwindigkeit": geschwindigkeit,
+        "drehzahl": drehzahl,
+        "kmStand": kmStand,
+        "tankfuellstand": tankfuellstand,
+        "motorTemperatur": motorTemperatur,
+        "oeldruck": oeldruck,
+        "spritVerbrauch": spritVerbrauch,
+        "ladedruck": ladedruck,
+        "fahrgestellnummer": fahrgestellnummer,
+        "name": name,
+      };
 }

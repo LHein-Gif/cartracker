@@ -5,35 +5,44 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'schlip schlop',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-        home: const SplashScreen(),
+      home: const SplashScreen(),
     );
   }
-  }
+}
 
-  class SplashScreen extends StatelessWidget {
-    const SplashScreen({super.key});
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
 
-    @override
-    Widget build(BuildContext context) {
-      return AnimatedSplashScreen(splash: Column(
-          children: [Image.asset('assets/logo_icoon.png'),
-          const Text('Cartracker', style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),)],
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSplashScreen(
+      splash: Column(
+        children: [
+          Image.asset('assets/logo_icoon.png'),
+          const Text(
+            'Cartracker',
+            style: TextStyle(
+                fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
+          )
+        ],
       ),
-          backgroundColor: Colors.black12,
-          nextScreen: const Homepage(),
+      backgroundColor: Colors.black12,
+      nextScreen: const Homepage(),
       splashIconSize: 307,
       duration: 4000,
-      splashTransition: SplashTransition.fadeTransition,);
-    }
+      splashTransition: SplashTransition.fadeTransition,
+    );
   }
+}

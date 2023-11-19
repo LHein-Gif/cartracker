@@ -14,12 +14,16 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven {
+            url 'https://jitpack.io'
+        }
     }
 
     plugins {
         id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
     }
 }
+
 
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
