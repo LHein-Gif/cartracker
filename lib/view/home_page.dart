@@ -4,6 +4,8 @@ import 'package:cartracker/models/post.dart';
 import 'package:cartracker/services/remote_services.dart';
 import 'package:flutter/material.dart';
 
+import '../ValuePainter.dart';
+
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -15,13 +17,17 @@ class _HomepageState extends State<Homepage> {
   Instruction? instructions;
   var isLoaded = false;
   List<double> geschwindigkeitValues = [];
+  int totalDataPoints = 0;
+  double minY = double.infinity; // New variable to keep track of minimum y-value
+  double maxY = double.negativeInfinity; // New variable to keep track of maximum y-value
+
 
   @override
   void initState() {
     super.initState();
 
     //fetch data from API
-    Timer.periodic(const Duration(milliseconds: 100), (timer) {
+    Timer.periodic(const Duration(milliseconds: 1000), (timer) {
       getData();
     });
   }
@@ -31,6 +37,9 @@ class _HomepageState extends State<Homepage> {
     try {
       instructions = await RemoteService().getInstruction();
       if (instructions != null) {
+        if (geschwindigkeitValues.length >= 21) {
+          geschwindigkeitValues.removeAt(0);
+        }
         geschwindigkeitValues.add(instructions!.geschwindigkeit.toDouble());
         setState(() {
           isLoaded = true;
@@ -67,28 +76,46 @@ class _HomepageState extends State<Homepage> {
     );
   }
   Widget buildChart() {
-    return Container(
-      height: 200, // Set the height of the chart here
+    final spots = geschwindigkeitValues
+        .asMap()
+        .entries
+        .map((e) => FlSpot(e.key.toDouble(), e.value))
+        .toList();
+
+    return SizedBox(
+      height: 200,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: LineChart(
-          LineChartData(
-            gridData: FlGridData(show: false),
-            titlesData: FlTitlesData(show: false),
-            borderData: FlBorderData(show: false),
-            lineBarsData: [
-              LineChartBarData(
-                spots: geschwindigkeitValues
-                    .asMap()
-                    .entries
-                    .map((e) => FlSpot(e.key.toDouble(), e.value))
-                    .toList(),
-                isCurved: true,
-                dotData: FlDotData(show: false),
-                belowBarData: BarAreaData(show: false),
+        child: Stack(
+          children: [
+            LineChart(
+              LineChartData(
+                gridData: FlGridData(show: false),
+                titlesData: FlTitlesData(
+                  leftTitles: SideTitles(
+                    showTitles: true,
+                    getTitles: (value) {
+                      return value.toString();
+                    },
+                  ),
+                  show: true,
+                ),
+                borderData: FlBorderData(show: false),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: spots,
+                    isCurved: true,
+                    dotData: FlDotData(show: false),
+                    belowBarData: BarAreaData(show: false),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            CustomPaint(
+              size: Size.infinite,
+              painter: ValuePainter(geschwindigkeitValues, spots),
+            ),
+          ],
         ),
       ),
     );
