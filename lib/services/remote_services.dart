@@ -8,7 +8,7 @@ class RemoteService {
     // var uri = Uri.parse('http://192.168.178.46:8080/messwerte'); //for phone
     var uri = Uri.parse('http://10.0.2.2:8080/messwerte'); //for emulator
     var response =
-        await client.get(uri).timeout(const Duration(milliseconds: 500));
+        await client.get(uri).timeout(const Duration(milliseconds: 3000));
     return Instruction.fromRawJson(response.body);
   }
 }
