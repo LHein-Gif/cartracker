@@ -1,6 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:cartracker/view/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:cartracker/view/mainmenu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,9 +12,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'schlip schlop',
-      home: SplashScreen(),
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.grey,
+      ),
+      home: const SplashScreen(),
     );
   }
 }
@@ -36,7 +42,7 @@ class SplashScreen extends StatelessWidget {
         ],
       ),
       backgroundColor: Colors.black12,
-      nextScreen: const Homepage(),
+      nextScreen: const MainMenu(),
       splashIconSize: 307,
       duration: 4000,
       splashTransition: SplashTransition.fadeTransition,

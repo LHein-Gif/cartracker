@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class ValuePainter extends CustomPainter {
     for (var i = 0; i < spots.length; i++) {
       textPainter.text = TextSpan(
         text: values[i].toString(),
-        style: TextStyle(color: Colors.black, fontSize: 10),
+        style: const TextStyle(color: Colors.black, fontSize: 10),
       );
 
       textPainter.layout();
