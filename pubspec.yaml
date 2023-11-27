@@ -43,6 +43,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_native_splash: ^2.3.5
+  syncfusion_flutter_gauges: ^23.2.5
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

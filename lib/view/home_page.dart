@@ -3,7 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:cartracker/models/post.dart';
 import 'package:cartracker/services/remote_services.dart';
 import 'package:flutter/material.dart';
-
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../ValuePainter.dart';
 
 class Homepage extends StatefulWidget {
@@ -39,7 +39,7 @@ class _HomepageState extends State<Homepage> {
     isChartView = widget.isChartView;
 
     //fetch data from API
-    _Beamngtimer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
+    _Beamngtimer = Timer.periodic(const Duration(milliseconds: 2000), (timer) {
       getData();
     });
   }
@@ -49,9 +49,6 @@ class _HomepageState extends State<Homepage> {
     try {
       instructions = await RemoteService().getInstruction();
       if (instructions != null) {
-        if (geschwindigkeitValues.length >= 16) {
-          geschwindigkeitValues.removeAt(0);
-        }
         geschwindigkeitValues.add(instructions!.geschwindigkeit.toDouble());
         setState(() {
           isLoaded = true;
@@ -85,53 +82,35 @@ class _HomepageState extends State<Homepage> {
     );
   }
 
-  Widget buildChart() {
-    final spots = geschwindigkeitValues
-        .asMap()
-        .entries
-        .map((e) => FlSpot(e.key.toDouble(), e.value))
-        .toList();
-try {
-  return SizedBox(
-    height: 200,
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        children: [
-          LineChart(
-            LineChartData(
-              gridData: FlGridData(show: false),
-              titlesData: FlTitlesData(
-                leftTitles: SideTitles(
-                  showTitles: true,
-                  getTitles: (value) {
-                    return value.toString();
-                  },
+  Widget buildSpeedometer() {
+    double currentSpeed = geschwindigkeitValues.isNotEmpty ? geschwindigkeitValues.last : 0;
+    return SfRadialGauge(
+      axes: <RadialAxis>[
+        RadialAxis(
+          minimum: 0,
+          maximum: 200,
+          ranges: <GaugeRange>[
+            GaugeRange(startValue: 0, endValue: 150, color: Colors.green),
+            GaugeRange(startValue: 150, endValue: 200, color: Colors.orange),
+          ],
+          pointers: <GaugePointer>[
+            NeedlePointer(value: currentSpeed),
+          ],
+          annotations: <GaugeAnnotation>[
+            GaugeAnnotation(
+              widget: Container(
+                child: Text(
+                  '$currentSpeed km/h',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
-                show: true,
               ),
-              borderData: FlBorderData(show: false),
-              lineBarsData: [
-                LineChartBarData(
-                  spots: spots,
-                  isCurved: false,
-                  dotData: FlDotData(show: false),
-                  belowBarData: BarAreaData(show: false),
-                ),
-              ],
+              angle: 90,
+              positionFactor: 0.5,
             ),
-          ),
-          CustomPaint(
-            size: Size.infinite,
-            painter: ValuePainter(geschwindigkeitValues, spots),
-          ),
-        ],
-      ),
-    ),
-  );
-} catch (e) {
-  return const Center(child: CircularProgressIndicator());
-}
+          ],
+        ),
+      ],
+    );
   }
 
   @override
@@ -166,7 +145,7 @@ try {
       body: Visibility(
         visible: isLoaded,
         replacement: const Center(child: CircularProgressIndicator()),
-        child: isChartView ? buildChart() : buildCurrentView(),
+        child: isChartView ? buildSpeedometer() : buildCurrentView(),
       ),
     );
   }
@@ -186,7 +165,7 @@ try {
           buildRow('Öldruck', instructions?.oeldruck),
           buildRow('Spritverbrauch', instructions?.spritVerbrauch),
           buildRow('Tankfüllstand', instructions?.tankfuellstand),
-          buildChart(),
+          buildSpeedometer(),
         ],
       ),
     );

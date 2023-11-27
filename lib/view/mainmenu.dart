@@ -9,25 +9,24 @@ void main() {
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
-@override
-_MainMenuState createState() => _MainMenuState();
+
+  @override
+  _MainMenuState createState() => _MainMenuState();
 }
 
 class _MainMenuState extends State<MainMenu> {
-  Color _buttonColor = const Color(0xFF424242);
   Timer? _colorChangeTimer;
 
   void ChangeButtonColor() {
     if (mounted) {
       setState(() {
-        _buttonColor = const Color(0xFFC2C2C2);
       });
     }
 
     _colorChangeTimer = Timer(const Duration(seconds: 1), () {
       if (mounted) {
         setState(() {
-          _buttonColor = const Color(0xFF424242); // reset to the original color
+// reset to the original color
         });
       }
     });
@@ -39,161 +38,127 @@ class _MainMenuState extends State<MainMenu> {
     super.dispose();
   }
 
+  Color _buttonColor1 = const Color(0xFF424242);
+  Color _buttonColor2 = const Color(0xFF424242);
+
+  Widget buildButton(double left, double top, String imageAsset, String text, bool isChartView, int buttonIndex) {
+    return Positioned(
+      left: left,
+      top: top,
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            if (buttonIndex == 1) {
+              _buttonColor1 = const Color(0xFFC2C2C2);
+            } else if (buttonIndex == 2) {
+              _buttonColor2 = const Color(0xFFC2C2C2);
+            }
+          });
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    Homepage(isChartView: isChartView)),
+          );
+
+          if (buttonIndex == 1) {
+            _colorChangeTimer = Timer(const Duration(seconds: 1), () {
+              if (mounted) {
+                setState(() {
+                  _buttonColor1 = const Color(0xFF424242); // reset to the original color
+                });
+              }
+            });
+          } else if (buttonIndex == 2) {
+            _colorChangeTimer = Timer(const Duration(seconds: 1), () {
+              if (mounted) {
+                setState(() {
+                  _buttonColor2 = const Color(0xFF424242); // reset to the original color
+                });
+              }
+            });
+          }
+        },
+        child: SizedBox(
+          width: 141,
+          height: 141,
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  width: 141,
+                  height: 141,
+                  decoration: ShapeDecoration(
+                    color: buttonIndex == 1 ? _buttonColor1 : _buttonColor2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 22,
+                top: 22,
+                child: Container(
+                  width: 97,
+                  height: 97,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(imageAsset),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 16,
+                left: 16,
+                child: SizedBox(
+                  width: 108,
+                  height: 20,
+                  child: Center(
+                    child: Text(
+                      text,
+                      style: const TextStyle(
+                        color: Color(0xFFB7B7B7),
+                        fontSize: 22,
+                        fontStyle: FontStyle.italic,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+        scaffoldBackgroundColor: const Color.fromARGB(28, 27, 31, 1000),
       ),
       home: Column(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width, // Full width
-            height: MediaQuery.of(context).size.height, // Full height
+            width: MediaQuery.of(context).size.width,
+            // Full width
+            height: MediaQuery.of(context).size.height,
+            // Full height
             clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(color: Color (0xFF282828)),
+            decoration: const BoxDecoration(color: Color(0x21514853)),
             child: Stack(
               children: [
-                Positioned(
-                  left: 22,
-                  top: 259,
-                  child: GestureDetector(
-                    onTap: () {
-                      ChangeButtonColor();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Homepage(isChartView: false)),
-                      );
-                    },
-                    child: SizedBox(
-                      width: 141,
-                      height: 141,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              width: 141,
-                              height: 141,
-                              decoration: ShapeDecoration(
-                                color: _buttonColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 22,
-                            top: 22,
-                            child: Container(
-                              width: 97,
-                              height: 97,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/dashboard.png'),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Positioned(
-                            left: 16,
-                            top: 107,
-                            child: SizedBox(
-                              width: 108,
-                              height: 25,
-                              child: Text(
-                                'Dashboard',
-                                style: TextStyle(
-                                  color: Color(0xFFB7B7B7),
-                                  fontSize: 20,
-                                  fontStyle: FontStyle.italic,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                  height: 0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 248,
-                  top: 259,
-                  child: GestureDetector(
-                    onTap: () {
-                      ChangeButtonColor();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Homepage(isChartView: true)),
-                      );
-                    },
-                    child: SizedBox(
-                      width: 141,
-                      height: 141,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              width: 141,
-                              height: 141,
-                              decoration: ShapeDecoration(
-                                color: _buttonColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 9,
-                            top: 9,
-                            child: Container(
-                              width: 123,
-                              height: 123,
-                              decoration: ShapeDecoration(
-                                image: const DecorationImage(
-                                  image: AssetImage('assets/erweitert.png'),
-                                  fit: BoxFit.fill,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(27),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Positioned(
-                            left: 23,
-                            top: 107,
-                            child: SizedBox(
-                              width: 96,
-                              height: 25,
-                              child: Text(
-                                'Erweitert',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFFB7B7B7),
-                                  fontSize: 20,
-                                  fontStyle: FontStyle.italic,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                  height: 0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                buildButton(22, 259, 'assets/dashboard.png', 'Dashboard', false, 1),
+                buildButton(248, 259, 'assets/erweitert.png', 'Erweitert', true, 2),
               ],
             ),
           ),
